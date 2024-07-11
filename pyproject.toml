@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "gesture_embedding_classifier"
+version = "0.1.0"
+description = ""
+authors = ["Luiz Carlos Cosmi Filho <luizcarloscosmifilho@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.26.4"
+opencv-contrib-python-headless = "^4.10.0.82"
+torch = "^2.3.1"
+torchvision = "^0.18.1"
+torchinfo = "^1.8.0"
+torchmetrics = "^1.4.0.post0"
+lightning = "^2.3.3"
+jsonargparse = {extras = ["signatures"], version = "^4.31.0"}
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+isort = "^5.13.2"
+flake8 = "^7.0.0"
+pytest = "^8.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

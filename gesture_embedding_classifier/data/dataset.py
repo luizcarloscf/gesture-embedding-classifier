@@ -68,7 +68,10 @@ class EmbeddingsDataset(Dataset):
             The label corresponding to the specified index.
         """
         feature_name = os.path.join(self._features_dir, f"{idx}.pth")
-        feature = torch.load(feature_name, map_location=torch.device("cpu"))
+        feature = torch.load(
+            feature_name,
+            map_location=None if torch.cuda.is_available() else torch.device("cpu"),
+        )
         label = self._labels[idx]
         if self._transform:
             feature = self._transform(feature)

@@ -60,7 +60,7 @@ class BaseModule(LightningModule):
         self.optimizer_kwargs = optimizer_kwargs
         self.lr_scheduler_class = lr_scheduler_class
         self.lr_scheduler_kwargs = lr_scheduler_kwargs
-        self.example_input_array = torch.zeros((1, 1, 107, 255), dtype=torch.float32)
+        self.example_input_array = torch.zeros((1, 1, 107, 256), dtype=torch.float32)
         self.train_accuracy = Accuracy(task="multiclass", num_classes=20)
         self.test_accuracy = Accuracy(task="multiclass", num_classes=20)
         self.val_accuracy = Accuracy(task="multiclass", num_classes=20)
@@ -105,7 +105,6 @@ class BaseModule(LightningModule):
         outputs = self.model(inputs)
 
         loss = self.loss_module(outputs, labels)
-        # accuracy = (outputs.argmax(dim=-1) == labels).float().mean()
         preds = outputs.argmax(dim=-1)
         self.train_accuracy(preds, labels)
 
@@ -146,7 +145,6 @@ class BaseModule(LightningModule):
         outputs = self.model(inputs)
 
         loss = self.loss_module(outputs, labels)
-        # accuracy = (outputs.argmax(dim=-1) == labels).sum().item()
         preds = outputs.argmax(dim=-1)
         self.val_accuracy(preds, labels)
 
@@ -184,8 +182,6 @@ class BaseModule(LightningModule):
         """
         inputs, labels = batch
         outputs = self.model(inputs)
-
-        # acc = (labels == outputs.argmax(dim=-1)).sum().item()
         preds = outputs.argmax(dim=-1)
         self.test_accuracy(preds, labels)
 

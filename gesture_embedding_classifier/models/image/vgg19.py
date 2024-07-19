@@ -9,6 +9,7 @@ class VGG19(nn.Module):
     """
     Custom VGG19 model for usually used for image classification. Here,
     it will be used to classify all stacked embeddings.
+    Reference: https://arxiv.org/abs/1409.1556
     """
 
     def __init__(

@@ -108,10 +108,7 @@ class FCN1D(nn.Module):
         )
         self.soft = nn.LogSoftmax(dim=1)
 
-    def forward(
-        self,
-        x: torch.Tensor,
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Forward pass through the network.
 

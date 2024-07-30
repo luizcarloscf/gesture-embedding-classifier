@@ -7,7 +7,7 @@ class Flatten(nn.Module):
     A module to flatten the input tensor.
     """
 
-    def __init__(self, keep_batch_dim: bool = True):
+    def __init__(self, keep_batch_dim: bool = True) -> None:
         """
         Constructor method for Flatten class.
 

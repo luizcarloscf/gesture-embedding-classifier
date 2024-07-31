@@ -78,10 +78,8 @@ class FCN1D(nn.Module):
         ----------
         num_classes : int, optional
             Number of output classes (default is 20).
-        num_features : int, optional
+        in_channels : int, optional
             The number of input features (default is 256).
-        dropout : float, optional
-            Dropout probability (default is 0.5).
         """
         super().__init__()
         self.conv_layers = nn.Sequential(

@@ -3,7 +3,6 @@ import logging
 from torchinfo import summary
 from lightning.pytorch import cli_lightning_logo
 
-from lightning.pytorch.loggers import CSVLogger
 from lightning.pytorch.callbacks import LearningRateMonitor, ModelCheckpoint
 from lightning.pytorch.cli import LightningCLI
 
@@ -39,9 +38,7 @@ def cli_main():
         },
         run=False,
     )
-    log.info(
-        "Model Summary: \n %s", summary(model=cli.model, input_size=(1, 1, 107, 256))
-    )
+    log.info("Model Summary: \n %s", summary(model=cli.model, input_size=(1, 107, 256)))
     cli.trainer.fit(model=cli.model, datamodule=cli.datamodule)
     cli.trainer.test(model=cli.model, datamodule=cli.datamodule)
 

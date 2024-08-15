@@ -15,6 +15,7 @@ torchinfo = "^1.8.0"
 torchmetrics = "^1.4.0.post0"
 lightning = "^2.3.3"
 jsonargparse = {extras = ["signatures"], version = "^4.31.0"}
+tensorboard = "^2.17.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
@@ -25,3 +26,8 @@ pytest = "^8.2.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+exclude = "(.eggs|.git|.hg|.mypy_cache|.nox|.tox|.venv|.svn|_build|buck-out|build|dist)"

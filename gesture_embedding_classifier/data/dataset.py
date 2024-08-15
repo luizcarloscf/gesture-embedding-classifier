@@ -64,8 +64,8 @@ class EmbeddingsDataset(Dataset):
         -------
         feature : torch.Tensor
             The feature tensor corresponding to the specified index.
-            Dimentions should be [L, N], where L is the sequence lenght and N is the
-            number of features.
+            Dimentions should be [C, L], where C is the number of channels and L is the
+            sequence lenght.
         label : int
             The label corresponding to the specified index.
         """
@@ -75,6 +75,8 @@ class EmbeddingsDataset(Dataset):
             map_location=None if torch.cuda.is_available() else torch.device("cpu"),
         )
         feature = torch.squeeze(feature)
+        feature = feature.permute(1, 0)
+        assert feature.shape[0] == 256 and feature.shape[1] == 107
         label = self._labels[idx]
         if self._transform:
             feature = self._transform(feature)

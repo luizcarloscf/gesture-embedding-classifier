@@ -60,7 +60,7 @@ class BaseModule(LightningModule):
         self.optimizer_kwargs = optimizer_kwargs
         self.lr_scheduler_class = lr_scheduler_class
         self.lr_scheduler_kwargs = lr_scheduler_kwargs
-        self.example_input_array = torch.zeros((1, 107, 256), dtype=torch.float32)
+        self.example_input_array = torch.zeros((1, 256, 107), dtype=torch.float32)
         self.train_accuracy = Accuracy(task="multiclass", num_classes=20)
         self.test_accuracy = Accuracy(task="multiclass", num_classes=20)
         self.val_accuracy = Accuracy(task="multiclass", num_classes=20)

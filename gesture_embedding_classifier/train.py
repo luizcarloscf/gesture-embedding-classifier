@@ -38,7 +38,7 @@ def cli_main():
         },
         run=False,
     )
-    log.info("Model Summary: \n %s", summary(model=cli.model, input_size=(1, 107, 256)))
+    log.info("Model Summary: \n %s", summary(model=cli.model, input_size=(1, 256, 107)))
     cli.trainer.fit(model=cli.model, datamodule=cli.datamodule)
     cli.trainer.test(model=cli.model, datamodule=cli.datamodule)
 

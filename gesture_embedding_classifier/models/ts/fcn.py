@@ -1,5 +1,3 @@
-from typing import Tuple, Optional
-
 import torch
 from torch import nn
 
@@ -83,26 +81,14 @@ class FCN1D(nn.Module):
         """
         super().__init__()
         self.conv_layers = nn.Sequential(
-            ConvBlock(
-                in_channels=in_channels,
-                out_channels=128,
-                kernel_size=8,
-            ),
-            ConvBlock(
-                in_channels=128,
-                out_channels=256,
-                kernel_size=5,
-            ),
-            ConvBlock(
-                in_channels=256,
-                out_channels=128,
-                kernel_size=3,
-            ),
+            ConvBlock(in_channels=in_channels, out_channels=128, kernel_size=8),
+            ConvBlock(in_channels=128, out_channels=256, kernel_size=5),
+            ConvBlock(in_channels=256, out_channels=128, kernel_size=3),
         )
         self.flatten = Flatten(keep_batch_dim=True)
         self.avgpool = nn.AdaptiveAvgPool1d(output_size=1)
         self.classifier = nn.Sequential(
-            nn.Linear(128, num_classes),
+            nn.Linear(in_features=128, out_features=num_classes),
         )
         self.soft = nn.LogSoftmax(dim=1)
 
@@ -113,26 +99,13 @@ class FCN1D(nn.Module):
         Parameters
         ----------
         x : torch.Tensor
-            Input tensor. Shape should be (batch_size, channels, sequence_length, num_features).
-            Where, channels = 1.
+            Input tensor. Shape should be (batch_size, num_features, sequence_length).
 
         Returns
         -------
         torch.Tensor
             Output tensor after passing through the model.
         """
-        batch_size = x.shape[0]
-        sequence_length = x.shape[2]
-        num_features = x.shape[3]
-        x = torch.reshape(
-            input=x,
-            shape=(
-                batch_size,
-                sequence_length,
-                num_features,
-            ),
-        )
-        x = x.permute((0, 2, 1))
         x = self.conv_layers(x)
         x = self.avgpool(x)
         x = self.flatten(x)

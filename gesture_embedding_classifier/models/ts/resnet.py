@@ -137,18 +137,6 @@ class ResNet1D(nn.Module):
         torch.Tensor
             Output tensor after passing through the model.
         """
-        batch_size = x.shape[0]
-        sequence_length = x.shape[2]
-        num_features = x.shape[3]
-        x = torch.reshape(
-            input=x,
-            shape=(
-                batch_size,
-                sequence_length,
-                num_features,
-            ),
-        )
-        x = x.permute((0, 2, 1))
         x = self.layers(x)
         x = self.avgpool(x)
         x = self.flatten(x)

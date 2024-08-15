@@ -1,10 +1,12 @@
 import os
 
 from lightning import LightningDataModule
+from torch import nn
 from torch.utils.data import DataLoader
+from torchvision import transforms
 
-
-from gesture_embedding_classifier.data.dataset import EmbeddingsDataset
+from ..transforms import AddGaussianNoise, Gain, Pad, Reverse, TrimZeros
+from .dataset import EmbeddingsDataset
 
 
 class EmbeddingsDataModule(LightningDataModule):
@@ -36,7 +38,15 @@ class EmbeddingsDataModule(LightningDataModule):
         self._train_dataset = EmbeddingsDataset(
             features_dir=os.path.join(dataset_path, "train"),
             labels_file=os.path.join(dataset_path, "train", "labels.pth"),
-            transform=None,
+            transform=transforms.Compose(
+                [
+                    TrimZeros(),
+                    transforms.RandomApply(nn.ModuleList([AddGaussianNoise(scale=0.05)]), p=0.5),
+                    transforms.RandomApply(nn.ModuleList([Gain(gain=1.05)]), p=0.3),
+                    transforms.RandomApply(nn.ModuleList([Reverse()]), p=0.2),
+                    Pad(size=107, value=0),
+                ],
+            ),
             target_transform=None,
         )
         self._val_dataset = EmbeddingsDataset(

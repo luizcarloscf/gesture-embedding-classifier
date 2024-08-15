@@ -53,13 +53,27 @@ class VGG19(nn.Module):
         Parameters
         ----------
         x : torch.Tensor
-            Input tensor.
+            Input tensor. Dimentions should be [B, C, L], where B is the number of batches,
+            C is the number of features and L is the sequence lenght.
 
         Returns
         -------
         torch.Tensor
             Output tensor after passing through the model.
         """
+        batch_size = x.shape[0]
+        num_features = x.shape[1]
+        sequence_length = x.shape[2]
+        # add one channel, as if it were an image in shades of gray
+        x = torch.reshape(
+            input=x,
+            shape=(
+                batch_size,
+                1,
+                sequence_length,
+                num_features,
+            ),
+        )
         x = self.conv_model.features(x)
         x = self.conv_model.avgpool(x)
         x = torch.flatten(x, 1)

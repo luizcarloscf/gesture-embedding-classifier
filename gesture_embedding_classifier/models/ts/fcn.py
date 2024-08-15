@@ -99,7 +99,8 @@ class FCN1D(nn.Module):
         Parameters
         ----------
         x : torch.Tensor
-            Input tensor. Shape should be (batch_size, num_features, sequence_length).
+            Input tensor. Dimentions should be [B, C, L], where B is the number of batches,
+            C is the number of features and L is the sequence lenght.
 
         Returns
         -------

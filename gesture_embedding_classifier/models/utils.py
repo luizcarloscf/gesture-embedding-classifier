@@ -34,5 +34,5 @@ class Flatten(nn.Module):
             Flattened tensor.
         """
         if self.keep_batch_dim:
-            return x.view(x.size(0), -1)
-        return x.view(-1)
+            return x.reshape(x.size(0), -1)
+        return x.reshape(-1)
